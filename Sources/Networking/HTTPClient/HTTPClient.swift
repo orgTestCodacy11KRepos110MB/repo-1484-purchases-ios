@@ -278,6 +278,7 @@ private extension HTTPClient {
 
         Logger.debug(Strings.network.api_request_started(request.httpRequest))
 
+        print("HERE I'M TOTALLY REQUESTING THE THING!!!")
         let task = session.dataTask(with: urlRequest) { (data, urlResponse, error) -> Void in
             self.handle(urlResponse: urlResponse,
                         request: request,

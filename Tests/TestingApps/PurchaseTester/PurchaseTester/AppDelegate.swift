@@ -18,20 +18,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        Purchases.logLevel = .debug
         Purchases.configure(withAPIKey: Constants.apiKey,
                             appUserID: nil,
                             observerMode: false,
                             userDefaults: nil,
                             useStoreKit2IfAvailable: true)
 
-        Purchases.logLevel = .debug
+        for index in 1...100 {
+            Purchases.shared.getOfferings { offerings, error in
+                print("offerings done \(index)")
+            }
+        }
+
         // set attributes to store additional, structured information for a user in RevenueCat.
         // More info: https://docs.revenuecat.com/docs/user-attributes
         Purchases.shared.setAttributes(["favorite_cat" : "garfield"])
 
         // we're requesting push notifications on app start only to showcase how to set the push token in RevenueCat
         requestPushNotificationsPermissions()
-        
+
         Purchases.shared.checkTrialOrIntroDiscountEligibility(["com.revenuecat.monthly_4.99.1_week_intro"]) { introEligibilityDict in
             print(introEligibilityDict)
         }
