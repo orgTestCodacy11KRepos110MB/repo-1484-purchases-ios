@@ -429,7 +429,7 @@ private extension StoreKit1IntegrationTests {
         expect(self.purchasesDelegate.customerInfo?.entitlements.all.count)
             .toEventually(equal(1), timeout: .seconds(30))
 
-        try await self.verifyEntitlementWentThrough(data.customerInfo,
+        try await self.verifyEntitlementWentThrough(self.purchasesDelegate.customerInfo!,
                                                     file: file,
                                                     line: line)
 
