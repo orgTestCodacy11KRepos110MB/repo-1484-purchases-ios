@@ -424,6 +424,11 @@ private extension StoreKit1IntegrationTests {
     ) async throws -> PurchaseResultData {
         let data = try await Purchases.shared.purchase(package: self.monthlyPackage)
 
+        try await Purchases.shared.restorePurchases()
+
+        expect(self.purchasesDelegate.customerInfo?.entitlements.all.count)
+            .toEventually(equal(1), timeout: .seconds(30))
+
         try await self.verifyEntitlementWentThrough(data.customerInfo,
                                                     file: file,
                                                     line: line)
